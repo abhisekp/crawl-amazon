@@ -3,10 +3,10 @@ require('dotenv').config();
 const config = {
   port: 3003,
   mongodb: {
-    url: "MONGO_URL"
+    url: ""
   },
   redis: {
-    url: "REDIS_URL"
+    url: ""
   }
 };
 

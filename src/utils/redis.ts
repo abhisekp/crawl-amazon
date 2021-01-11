@@ -4,10 +4,9 @@ import { logger } from "./logger";
 
 bluebird.promisifyAll(redis);
 
-export const registerRedis = async (opts?: any) => {
-  let connected = false;
-  let client;
-
+let connected = false;
+let client;
+export const getRedisClient = async (opts?: any): Promise<redis.RedisClient> => {
   return connected && client
     ? client
     : new Promise((resolve, reject) => {

@@ -1,8 +1,17 @@
+import chalk from "chalk";
 import winston from "winston";
+import stripAnsi from "strip-ansi";
+
+const jsonReplacer = (k, v) => {
+  if (v.message) {
+    v.message = stripAnsi(v.message) 
+  }
+  return v
+};
 
 export const logger = winston.createLogger({
   level: "info",
-  format: winston.format.json(),
+  format: winston.format.json({ replacer: jsonReplacer }),
   defaultMeta: { service: "crawl-amazon" },
   transports: [
     //

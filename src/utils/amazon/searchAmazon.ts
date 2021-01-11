@@ -108,7 +108,7 @@ export const getProductTechSpec = (html: string): { [key: string]: string } => {
 
 export const getProductTitle = (html: HTML): string => {
   const $ = cheerio.load(html);
-  const title = $("#productTitle").text();
+  const title = $("#productTitle").text().trim();
   return title;
 };
 

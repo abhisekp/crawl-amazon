@@ -1,4 +1,4 @@
-import { SearchService } from "./search";
+import { SearchAPIService } from "./search";
 import { HealthService } from "./health";
 
-export const controllers = [SearchService, HealthService];
+export const controllers = [SearchAPIService, HealthService];
