@@ -1,6 +1,6 @@
 {
   "name": "crawl-amazon",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/src/index.js",
   "author": "Abhisek Pattnaik <abhisekp@goniyo.com> (https://about.me/abhisekp)",
   "license": "MIT",
