@@ -5,6 +5,7 @@
     "project": "./tsconfig.json"
   },
   "rules": {
-    "comma-dangle": ["warn", "always-multiline"]
+    "comma-dangle": ["warn", "always-multiline"],
+    "quotes": ["warn", "single", { "avoidEscape": true }]
   }
 }

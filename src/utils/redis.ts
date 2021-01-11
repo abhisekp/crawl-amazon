@@ -1,5 +1,6 @@
 import redis from "redis";
 import bluebird from "bluebird";
+import { logger } from "./logger";
 
 bluebird.promisifyAll(redis);
 
@@ -20,7 +21,7 @@ export const registerRedis = async (opts?: any) => {
         });
 
         rClient.on("ready", () => {
-          console.log("Connected to redis");
+          logger.info("Connected to redis");
           connected = true;
           client = rClient;
           resolve(rClient);

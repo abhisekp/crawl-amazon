@@ -4,6 +4,7 @@ import cheerio from "cheerio";
 import pTimes from "p-times";
 import cheerioTableparser from "cheerio-tableparser";
 import { getUserAgent } from "../getUserAgent";
+// import { logger } from "../logger";
 
 export const getSearchUrl = ({ page, keyword }) =>
   `https://www.amazon.in/s?k=${keyword}&page=${page}`;
@@ -95,12 +96,12 @@ export const getProductTechSpec = (html: string): { [key: string]: string } => {
     .parent()
     .html()
     .trim();
-  // console.log(productSpecHTML);
+  // logger.info(productSpecHTML);
   const $table = cheerio.load(productSpecHTML);
   cheerioTableparser($table);
   // @ts-ignore
   const techSpecs = $table(productSpecHTML).parsetable(false, false, true);
-  // console.log(techSpecs);
+  // logger.info(techSpecs);
   // @ts-ignore
   return _.zipObject(techSpecs[0], techSpecs[1]);
 };

@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import bluebird from "bluebird";
+import { logger } from "./logger";
 
 export const registerMongoose = async (opts?: any) => {
   let connected = false;
@@ -27,7 +28,7 @@ export const registerMongoose = async (opts?: any) => {
 
         db.once("open", function() {
           // we're connected!
-          console.log("Connected to DB");
+          logger.info("Connected to DB");
           connected = true;
           client = db;
           resolve(db);
