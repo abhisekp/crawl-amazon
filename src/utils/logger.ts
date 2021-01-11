@@ -4,9 +4,9 @@ import stripAnsi from "strip-ansi";
 
 const jsonReplacer = (k, v) => {
   if (v.message) {
-    v.message = stripAnsi(v.message) 
+    v.message = stripAnsi(v.message);
   }
-  return v
+  return v;
 };
 
 export const logger = winston.createLogger({

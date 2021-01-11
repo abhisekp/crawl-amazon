@@ -38,7 +38,12 @@ export const ProductSchema = new Schema<ProductSchema>(
     },
     props: [ProductPropSchema],
     fetchedAt: Date,
-    pdfFile: String,
+    pdfFile: {
+      type: String,
+      get() {
+        return `${this.asin}.pdf`;
+      }
+    }
   },
   {
     timestamps: true,

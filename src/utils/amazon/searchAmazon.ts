@@ -37,6 +37,7 @@ export type SearchAmazonOptions = {
   keyword?: string;
   limit?: number;
   pageLimit?: number;
+  baseUrl?: string;
 };
 const withSearchOptions = _.defaults<SearchAmazonOptions>({
   pageLimit: 1,
@@ -108,7 +109,9 @@ export const getProductTechSpec = (html: string): { [key: string]: string } => {
 
 export const getProductTitle = (html: HTML): string => {
   const $ = cheerio.load(html);
-  const title = $("#productTitle").text().trim();
+  const title = $("#productTitle")
+    .text()
+    .trim();
   return title;
 };
 

@@ -1,9 +1,15 @@
+import { Return, ContextRequest } from "typescript-rest";
+import { Request } from "express";
+import url from "url";
 import {
   searchAmazon,
   getProductTechSpecByASIN,
   SearchAmazonOptions
 } from "../../utils/amazon/searchAmazon";
 import pMap from "p-map";
+import path from "path";
+import fs, { promises as fsPromises } from "fs";
+import ejs from "ejs";
 import { logger } from "../../utils/logger";
 import {
   ProductModel,
@@ -12,6 +18,7 @@ import {
 } from "../../models/product.model";
 import * as _ from "lodash/fp";
 import _nofp from "lodash";
+import Puppeteer from "puppeteer";
 import { getRedisClient } from "../../utils/redis";
 
 export class SearchService {
@@ -20,9 +27,42 @@ export class SearchService {
     return await ProductModel.paginate();
   }
 
+  async getPDF(asin: string, force = false) {
+    const filename = `${asin}.pdf`;
+    const productFilePath = path.resolve(process.cwd(), "tmp", filename);
+    // Return the pdf if present
+    const isExist = await fsPromises.access(productFilePath).then(
+      () => true,
+      () => false
+    );
+    if (!force && isExist) {
+      return new Return.DownloadResource(productFilePath, filename);
+    }
+
+    // Create PDF if not present
+    const product = await ProductModel.findOne({ asin });
+    const templatePath = path.resolve(
+      process.cwd(),
+      "views",
+      "productInfo.ejs"
+    );
+    const html = await ejs.renderFile(
+      templatePath,
+      { product },
+      { async: true }
+    );
+    const browser = await Puppeteer.launch();
+    const page = await browser.newPage();
+    await page.setContent(html);
+
+    await page.pdf({ path: productFilePath });
+    return new Return.DownloadResource(productFilePath, filename);
+  }
+
   async searchAmazon({
     keyword,
-    pageLimit
+    pageLimit,
+    baseUrl
   }: SearchAmazonOptions): Promise<
     {
       key: string;
@@ -43,15 +83,15 @@ export class SearchService {
         }
       });
       if (dbResult.length) {
-        return dbResult.map(curr => {
-          return curr.props.reduce(
+        return dbResult.map(product => {
+          return product.props.reduce(
             (acc, item) => {
               acc[item.label] = item.value;
               return acc;
             },
             {
-              key: curr.title,
-              pdf: curr.pdfFile
+              key: product.title,
+              pdf: new url.URL(product.pdfFile, baseUrl).toString()
             }
           );
         });
@@ -104,7 +144,10 @@ export class SearchService {
             mongoIds.push(result.id);
           });
 
-        return Object.assign(productTechSpec, { key: productTechSpec.title });
+        return Object.assign(productTechSpec, {
+          key: productTechSpec.title,
+          pdf: new url.URL(`${asin}.pdf`, baseUrl).toString()
+        });
       },
       {
         concurrency: 10

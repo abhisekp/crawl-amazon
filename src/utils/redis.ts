@@ -6,7 +6,9 @@ bluebird.promisifyAll(redis);
 
 let connected = false;
 let client;
-export const getRedisClient = async (opts?: any): Promise<redis.RedisClient> => {
+export const getRedisClient = async (
+  opts?: any
+): Promise<redis.RedisClient> => {
   return connected && client
     ? client
     : new Promise((resolve, reject) => {

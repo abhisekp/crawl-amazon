@@ -3,7 +3,7 @@ import ms from "ms";
 import { logger } from "./utils/logger";
 import { Application } from "express";
 import { registerApp } from "./app";
-import chalk from 'chalk';
+import chalk from "chalk";
 
 export const startServer = async () => {
   const PORT = config.get<number | string>("port");
