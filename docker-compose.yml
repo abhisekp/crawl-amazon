@@ -1,0 +1,29 @@
+version: '3'
+services:
+  crawl-amazon:
+    container_name: crawl-amazon
+    restart: always
+    build: .
+    ports:
+      - '3003:3003'
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3003"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    links:
+      - redis
+      - mongo
+  mongo:
+    container_name: crawl-amazon-mongo
+    image: 'mongo:4'
+  redis:
+    container_name: crawl-amazon-redis
+    image: 'redis:6'

@@ -1,0 +1,9 @@
+{
+  "port": "PORT",
+  "mongodb": {
+    "url": "MONGO_URL" 
+  },
+  "redis": {
+    "url": "REDIS_URL"
+  }
+}

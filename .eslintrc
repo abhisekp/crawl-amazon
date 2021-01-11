@@ -1,0 +1,10 @@
+{
+  "root": true,
+  "extends": ["airbnb-typescript"],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "comma-dangle": ["warn", "always-multiline"]
+  }
+}
