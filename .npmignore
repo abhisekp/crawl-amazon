@@ -135,3 +135,5 @@ config/local*
 !*example*
 !typings
 tmp/
+.history
+.vscode
