@@ -1,13 +1,14 @@
 {
   "name": "crawl-amazon",
   "version": "0.0.0",
-  "main": "dist/index.js",
+  "main": "dist/src/index.js",
   "author": "Abhisek Pattnaik <abhisekp@goniyo.com> (https://about.me/abhisekp)",
   "license": "MIT",
   "scripts": {
     "start": "node .",
     "dev": "tsnd --watch config/,src/ --rs --cls --transpile-only -- src/index.ts",
     "debug": "tsnd --watch config/,src/ --inspect=8723 --rs --cls --transpile-only -- src/index.ts",
+    "prebuild": "yarn clean",
     "build": "tsc",
     "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
     "format": "prettier-eslint --write \"src/**/*.ts\"",

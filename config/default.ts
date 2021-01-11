@@ -10,5 +10,9 @@ const config = {
   }
 };
 
+declare type DeepPartial<T> = {
+  [P in keyof T]?: DeepPartial<T[P]>;
+};
+
 export type Config = DeepPartial<typeof config>;
 export default config;

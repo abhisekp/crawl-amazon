@@ -1,4 +1,7 @@
 node_modules/
 dist/
-/tmp
-.history
+/tmp/
+.history/
+*.tgz
+*.log
+.vscode/
