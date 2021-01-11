@@ -3,10 +3,10 @@ require('dotenv').config();
 const config = {
   port: 3003,
   mongodb: {
-    url: ""
+    url: "mongo://localhost/crawl-amazon"
   },
   redis: {
-    url: ""
+    url: "redis://localhost"
   }
 };
 
