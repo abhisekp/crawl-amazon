@@ -15,7 +15,7 @@ export const getRedisClient = async (
         const rClient = redis.createClient(opts);
 
         rClient.on("error", function(error) {
-          console.error(error);
+          logger.error(error);
           connected = false;
           client = null;
           reject(error);
